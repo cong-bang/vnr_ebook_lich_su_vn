@@ -7,75 +7,20 @@ import {
   Shuffle,
   XCircle,
 } from "lucide-react";
-import historyBg from "../assets/images/history-vietnam-bg.jpeg";
+import historyBgUrl from "../assets/images/history-vietnam-bg.jpeg?url";
+import { ALL_QUESTIONS } from "../data/question";
 
 const ROWS = 2;
 const COLS = 3;
 
-const QUESTIONS = [
-  {
-    id: 1,
-    question: "Đảng Cộng sản Việt Nam được thành lập vào ngày nào?",
-    options: ["3/2/1930", "19/5/1890", "2/9/1945", "30/4/1975"],
-    correct: 0,
-    piece: 1,
-    position: { row: 1, col: 1 },
-  },
-  {
-    id: 2,
-    question: "Cách mạng Tháng Tám thành công vào năm nào?",
-    options: ["1930", "1941", "1945", "1954"],
-    correct: 2,
-    piece: 2,
-    position: { row: 1, col: 2 },
-  },
-  {
-    id: 3,
-    question: "Chiến dịch nào kết thúc cuộc kháng chiến chống Pháp?",
-    options: ["Biên Giới", "Điện Biên Phủ", "Hồ Chí Minh", "Mậu Thân"],
-    correct: 1,
-    piece: 3,
-    position: { row: 1, col: 3 },
-  },
-  {
-    id: 4,
-    question: "Miền Nam được giải phóng hoàn toàn vào ngày nào?",
-    options: ["2/9/1945", "7/5/1954", "30/4/1975", "2/7/1976"],
-    correct: 2,
-    piece: 4,
-    position: { row: 2, col: 1 },
-  },
-  {
-    id: 5,
-    question: "Ai là người sáng lập Đảng Cộng sản Việt Nam?",
-    options: [
-      "Võ Nguyên Giáp",
-      "Nguyễn Ái Quốc",
-      "Phạm Văn Đồng",
-      "Trường Chinh",
-    ],
-    correct: 1,
-    piece: 5,
-    position: { row: 2, col: 2 },
-  },
-  {
-    id: 6,
-    question: "Kháng chiến chống Mỹ kéo dài trong bao nhiêu năm?",
-    options: ["9 năm", "15 năm", "21 năm", "30 năm"],
-    correct: 2,
-    piece: 6,
-    position: { row: 2, col: 3 },
-  },
-];
-
-const IMAGE_URL = historyBg;
+const IMAGE_URL = historyBgUrl;
 const shuffle = (arr) => [...arr].sort(() => Math.random() - 0.5);
 
 // --- CẮT ẢNH THÀNH 6 MẢNH, PHÂN BỔ PIXEL DƯ ĐỀU CHO CÁC CỘT/HÀNG ---
 async function sliceImage(url, rows, cols) {
   const img = await new Promise((res, rej) => {
     const im = new Image();
-    im.crossOrigin = "anonymous"; // phòng khi ảnh khác domain (nếu cần)
+    im.crossOrigin = "anonymous";
     im.onload = () => res(im);
     im.onerror = rej;
     im.src = url;
@@ -86,8 +31,8 @@ async function sliceImage(url, rows, cols) {
 
   const baseW = Math.floor(w / cols);
   const baseH = Math.floor(h / rows);
-  const extraW = w - baseW * cols; // phần dư chia đều theo cột đầu
-  const extraH = h - baseH * rows; // phần dư chia đều theo hàng đầu
+  const extraW = w - baseW * cols;
+  const extraH = h - baseH * rows;
 
   const colWidths = Array.from(
     { length: cols },
@@ -136,6 +81,29 @@ export const MiniGame = ({ onExit }) => {
   const [currentQuestion, setCurrentQuestion] = useState(null);
   const [showResult, setShowResult] = useState(false);
   const [isCorrect, setIsCorrect] = useState(false);
+  const [QUESTIONS, setQUESTIONS] = useState([]);
+
+  useEffect(() => {
+    startNewGame();
+  }, []);
+
+  const startNewGame = () => {
+    // Chọn 6 câu ngẫu nhiên
+    const selected = shuffle(ALL_QUESTIONS).slice(0, ROWS * COLS);
+    // Gắn số mảnh và vị trí cho từng câu
+    const withPieces = selected.map((q, i) => ({
+      ...q,
+      piece: i + 1,
+      position: {
+        row: Math.floor(i / COLS) + 1,
+        col: (i % COLS) + 1,
+      },
+    }));
+    setQUESTIONS(withPieces);
+    setUnlockOrder(shuffle(withPieces.map((q) => q.id)));
+    setUnlockedPieces([]);
+    setPhase("unlock");
+  };
 
   // unlock random order
   const [unlockOrder, setUnlockOrder] = useState(() =>
@@ -270,16 +238,15 @@ export const MiniGame = ({ onExit }) => {
   };
 
   const resetGame = () => {
-    setPhase("unlock");
-    setUnlockedPieces([]);
+    startNewGame();
     setCurrentQuestion(null);
     setShowResult(false);
     setPool([]);
     setGrid(Array(ROWS * COLS).fill(null));
-    setUnlockOrder(shuffle(QUESTIONS.map((q) => q.id)));
     setShowReport(false);
     setLastScore(0);
   };
+
   const resetPuzzleOnly = () => {
     const all = QUESTIONS.map((q) => ({ ...q, src: tileSrcList[q.piece - 1] }));
     setPool(shuffle(all));
@@ -407,9 +374,16 @@ export const MiniGame = ({ onExit }) => {
       <div className="fixed inset-0 bg-gradient-to-br from-[#400000] via-[#8B0000] to-[#600000] text-white flex flex-col items-center justify-start pt-20 pb-10 overflow-y-auto">
         {/* Title */}
         <div className="text-center mb-6">
-          <h2 className="text-3xl font-bold font-serif text-[#FFD700] mb-2 tracking-wide">
+          <h2 className="text-3xl font-bold font-serif text-[#FFD700] mb-4 tracking-wide">
             Mảnh Ghép Lịch Sử
           </h2>
+          <button
+            onClick={resetPuzzleOnly}
+            className="px-4 py-2 bg-[#FFD700] text-[#8B0000] rounded-md font-bold hover:bg-[#FFA500] transition-all flex justify-center items-center gap-2 mx-auto w-full sm:w-auto"
+          >
+            <RotateCcw size={18} />
+            Ghép lại từ đầu
+          </button>
         </div>
 
         {/* Puzzle grid */}
@@ -496,7 +470,7 @@ export const MiniGame = ({ onExit }) => {
           Mở Khóa Lịch Sử
         </h2>
         <p className="text-lg text-[#FAF3E0] italic">
-          Trả lời đúng để mở khóa từng mảnh ghép! (cắt ảnh thật — không dư mép)
+          Trả lời đúng để mở khóa từng mảnh ghép!
         </p>
         <div className="mt-4 flex items-center justify-center gap-2">
           <div className="bg-[#FFD700]/20 px-6 py-2 rounded-full border border-[#FFD700]">
