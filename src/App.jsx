@@ -5,7 +5,7 @@ import { Experience } from "./components/Experience";
 import { UI } from "./components/UI";
 import { MiniGame } from "./components/MiniGame";
 import { pages } from "./components/UI";
-
+import ChatBox from "./components/Chatbox";
 function App() {
   const [mode, setMode] = useState("book");
   const [selectedPage, setSelectedPage] = useState(null);
@@ -13,9 +13,7 @@ function App() {
   return (
     <>
       <UI mode={mode} setMode={setMode} selectedPage={selectedPage} />
-
       <Loader />
-
       {/* Hiển thị quyển sách 3D */}
       {mode === "book" && (
         <Canvas
@@ -33,10 +31,8 @@ function App() {
           </group>
         </Canvas>
       )}
-
       {/* MiniGame hiển thị riêng */}
       {mode === "minigame" && <MiniGame onExit={() => setMode("book")} />}
-
       {/* Giao diện xem chi tiết */}
       {mode === "showdetail" && selectedPage && (
         <div className="fixed inset-0 flex flex-col items-center justify-center bg-[#111]/95 text-[#FFD700] z-50">
@@ -58,6 +54,7 @@ function App() {
           </button>
         </div>
       )}
+      <ChatBox />;
     </>
   );
 }
