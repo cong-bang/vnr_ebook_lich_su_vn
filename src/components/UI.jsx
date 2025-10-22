@@ -6,22 +6,18 @@ import { BookOpen } from "lucide-react";
 
 /* --- danh sách ảnh tên file (giữ nguyên) --- */
 const pictures = [
-  "DSC00680",
-  "page_1",
-  "DSC00933",
-  "DSC00966",
-  "DSC00983",
-  "DSC01011",
-  "DSC01040",
-  "DSC01064",
-  "DSC01071",
-  "DSC01103",
-  "DSC01145",
-  "DSC01420",
-  "DSC01461",
-  "DSC01489",
-  "DSC02031",
-  "DSC02064",
+  "1.2-2.1-2.3-4_page-0001",
+  "1.2-2.1-2.3-4_page-0002",
+  "1.2-2.1-2.3-4_page-0003",
+  "1.2-2.1-2.3-4_page-0004",
+  "1.2-2.1-2.3-4_page-0005",
+  "1.2-2.1-2.3-4_page-0006",
+  "1.2-2.1-2.3-4_page-0007",
+  "1.2-2.1-2.3-4_page-0008",
+  "1.2-2.1-2.3-4_page-0009",
+  "1.2-2.1-2.3-4_page-0010",
+  "1.2-2.1-2.3-4_page-0011",
+  "1.2-2.1-2.3-4_page-0012",
 ];
 
 export const pageAtom = atom(0);
@@ -207,10 +203,10 @@ export const UI = ({ mode, setMode }) => {
             })()}
 
             {/* Mô tả */}
-            <div className="mt-6 text-[#333]">
+            {/* <div className="mt-6 text-[#333]">
               <h4 className="text-lg font-semibold mb-2">Mô tả:</h4>
               <p>{`Trang ${page} hiển thị hai hình ảnh lịch sử liên quan đến giai đoạn đấu tranh.`}</p>
-            </div>
+            </div> */}
 
             <div className="mt-6 text-right">
               <button
