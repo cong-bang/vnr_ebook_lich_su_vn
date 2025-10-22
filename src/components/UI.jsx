@@ -61,11 +61,14 @@ export const UI = ({ mode, setMode }) => {
     <>
       {/* Thanh tiêu đề */}
       {mode === "book" && (
-        <header className="fixed top-0 left-0 w-full z-20 bg-[#8B0000]/90 text-[#FFD700] shadow-md py-4 px-10 flex items-center justify-between">
-          <h1 className="text-2xl font-bold tracking-wide font-serif">
+        <header
+          className="fixed top-0 left-0 w-full z-20 bg-[#8B0000]/90 text-[#FFD700] shadow-md 
+  py-3 px-4 sm:py-4 sm:px-10 flex flex-col sm:flex-row items-center justify-between gap-2 sm:gap-0"
+        >
+          <h1 className="text-xl sm:text-2xl font-bold tracking-wide font-serif text-center sm:text-left">
             Lịch Sử Việt Nam
           </h1>
-          <span className="text-[#FAF3E0] italic text-lg">
+          <span className="text-[#FAF3E0] italic text-sm sm:text-lg text-center sm:text-right">
             Hành trình đấu tranh giành độc lập (1930 - 1945)
           </span>
         </header>
@@ -108,7 +111,7 @@ export const UI = ({ mode, setMode }) => {
           </button>
         )}
       </div>
-      {mode === "book" && (
+      {/* {mode === "book" && (
         <main className="pointer-events-none select-none z-10 fixed inset-0 flex flex-col justify-end">
           <div className="w-full overflow-auto pointer-events-auto flex justify-center bg-gradient-to-t from-[#8B0000]/70 to-transparent py-6">
             <div className="overflow-auto flex items-center gap-3 max-w-full px-6">
@@ -141,7 +144,7 @@ export const UI = ({ mode, setMode }) => {
             </div>
           </div>
         </main>
-      )}
+      )} */}
 
       {/* Hình nền */}
       <div
