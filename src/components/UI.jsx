@@ -6,18 +6,30 @@ import { BookOpen } from "lucide-react";
 
 /* --- danh sách ảnh tên file (giữ nguyên) --- */
 const pictures = [
-  "1.2-2.1-2.3-4_page-0001",
-  "1.2-2.1-2.3-4_page-0002",
-  "1.2-2.1-2.3-4_page-0003",
-  "1.2-2.1-2.3-4_page-0004",
-  "1.2-2.1-2.3-4_page-0005",
-  "1.2-2.1-2.3-4_page-0006",
-  "1.2-2.1-2.3-4_page-0007",
-  "1.2-2.1-2.3-4_page-0008",
-  "1.2-2.1-2.3-4_page-0009",
-  "1.2-2.1-2.3-4_page-0010",
-  "1.2-2.1-2.3-4_page-0011",
-  "1.2-2.1-2.3-4_page-0012",
+  "1",
+  "2",
+  "3",
+  "4",
+  "5",
+  "6",
+  "7",
+  "8",
+  "9",
+  "10",
+  "11",
+  "12",
+  "13",
+  "14",
+  "15",
+  "16",
+  "17",
+  "18",
+  "19",
+  "20",
+  "21",
+  "22",
+  "23",
+  "23",
 ];
 
 export const pageAtom = atom(0);
@@ -185,7 +197,7 @@ export const UI = ({ mode, setMode }) => {
                       className="w-full h-auto rounded-lg border border-[#8B0000] shadow-md"
                     />
                     <p className="text-center text-sm italic text-[#555]">
-                      {frontImg}
+                      trang {frontImg}
                     </p>
                   </div>
 
@@ -197,7 +209,7 @@ export const UI = ({ mode, setMode }) => {
                         className="w-full h-auto rounded-lg border border-[#8B0000] shadow-md"
                       />
                       <p className="text-center text-sm italic text-[#555]">
-                        {backImg}
+                        trang {backImg}
                       </p>
                     </div>
                   )}
