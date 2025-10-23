@@ -23,7 +23,7 @@ const ChatBox = () => {
 
     try {
       const res = await fetch(
-        `https://localhost:7082/api/DatabaseAnalyzer/ExecuteSqlCommand?sqlCommand=${encodeURIComponent(
+        `https://713bdca82fd5.ngrok-free.app/api/DatabaseAnalyzer/ExecuteSqlCommand?sqlCommand=${encodeURIComponent(
           message
         )}`,
         { method: "POST" }
